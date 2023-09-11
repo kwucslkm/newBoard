@@ -15,13 +15,14 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    @GetMapping("/save")
+    @GetMapping("/save") // /board/save
     public String saveForm() {
         return "boardPages/boardSave";
     }
 
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDTO boardDTO) {
+        boardService.save(boardDTO);
         return "redirect:/board/";
     }
 }
