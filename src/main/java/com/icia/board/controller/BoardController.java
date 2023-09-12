@@ -2,7 +2,6 @@ package com.icia.board.controller;
 
 import com.icia.board.dto.BoardDTO;
 import com.icia.board.service.BoardService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,6 +59,12 @@ public class BoardController {
         model.addAttribute("board", dto);
         return "boardPages/boardDetail";
 //        return "redirect:/board?id=" + boardDTO.getId();
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam("id") Long id) {
+        boardService.delete(id);
+        return "redirect:/board/";
     }
 
 
