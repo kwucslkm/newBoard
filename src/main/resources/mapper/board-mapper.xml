@@ -16,10 +16,14 @@
         update board_table set boardHits = boardHits + 1 where id = #{id}
     </update>
     <select id="findById" parameterType="Long" resultType="board">
-        select id, boardWriter, boardTitle, boardContents, fileAttached, boardPass
+        select id, boardWriter, boardTitle, boardContents, fileAttached, boardPass,
                date_format(createdAt, "%y-%m-%d %H:%i:%s") as createdAt, boardHits
-        from board_table
+        from board_table where id = #{id}
     </select>
+    <update id="update" parameterType="board">
+        update board_table set boardTitle=#{boardTitle}, boardContents=#{boardContents}
+            where id = #{id}
+    </update>
 </mapper>
 
 

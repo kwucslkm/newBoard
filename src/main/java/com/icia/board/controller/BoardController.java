@@ -2,6 +2,7 @@ package com.icia.board.controller;
 
 import com.icia.board.dto.BoardDTO;
 import com.icia.board.service.BoardService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +44,22 @@ public class BoardController {
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
         return "boardPages/boardDetail";
+    }
+
+    @GetMapping("/update")
+    public String updateForm(@RequestParam("id") Long id, Model model) {
+        BoardDTO boardDTO = boardService.findById(id);
+        model.addAttribute("board", boardDTO);
+        return "boardPages/boardUpdate";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
+        boardService.update(boardDTO);
+        BoardDTO dto = boardService.findById(boardDTO.getId());
+        model.addAttribute("board", dto);
+        return "boardPages/boardDetail";
+//        return "redirect:/board?id=" + boardDTO.getId();
     }
 
 

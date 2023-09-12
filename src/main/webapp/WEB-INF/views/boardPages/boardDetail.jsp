@@ -35,4 +35,17 @@
     <button onclick="board_delete()">삭제</button>
 </div>
 </body>
+<script>
+    const board_list = () => {
+        location.href = "/board/";
+    }
+    const board_update = () => {
+        const id = '${board.id}';
+        location.href = "/board/update?id=" + id;
+    }
+    const board_delete = () => {
+        const id = '${board.id}';
+        location.href = "/board/delete?id=" + id;
+    }
+</script>
 </html>
