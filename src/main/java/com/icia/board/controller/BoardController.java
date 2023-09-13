@@ -3,6 +3,7 @@ package com.icia.board.controller;
 import com.icia.board.dto.BoardDTO;
 import com.icia.board.dto.BoardFileDTO;
 import com.icia.board.dto.CommentDTO;
+import com.icia.board.dto.PageDTO;
 import com.icia.board.service.BoardService;
 import com.icia.board.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,13 @@ public class BoardController {
     // /board/list?page=1
     @GetMapping("/list")
     public String findAll(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                            Model model) {
+                          Model model) {
         List<BoardDTO> boardDTOList = boardService.pagingList(page);
         System.out.println("boardDTOList = " + boardDTOList);
         model.addAttribute("boardList", boardDTOList);
+
+        PageDTO pageDTO = boardService.pageNumber(page);
+        model.addAttribute("paging", pageDTO);
         return "boardPages/boardList";
     }
 
@@ -88,7 +92,18 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-
+    @GetMapping("/sample")
+    public String sampleData() {
+        for (int i = 1; i <= 20; i++) {
+            BoardDTO boardDTO = new BoardDTO();
+            boardDTO.setBoardWriter("aa");
+            boardDTO.setBoardTitle("title" + i);
+            boardDTO.setBoardContents("contents" + i);
+            boardDTO.setBoardPass("pass" + i);
+            boardService.sampleData(boardDTO);
+        }
+        return "redirect:/board/list";
+    }
 
 
 }
