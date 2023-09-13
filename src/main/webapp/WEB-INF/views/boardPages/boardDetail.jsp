@@ -122,7 +122,7 @@
         });
     }
     const board_list = () => {
-        location.href = "/board/";
+        location.href = "/board/list";
     }
     const board_update = () => {
         const id = '${board.id}';
