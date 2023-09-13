@@ -49,7 +49,9 @@ public class BoardController {
     }
 
     @GetMapping
-    public String findById(@RequestParam("id") Long id, Model model) {
+    public String findById(@RequestParam("id") Long id,
+                           @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                           Model model) {
         // 조회수 처리
         // 데이터 가져오기
         boardService.updateHits(id);
@@ -67,6 +69,8 @@ public class BoardController {
         } else {
             model.addAttribute("commentList", commentDTOList);
         }
+
+        model.addAttribute("page", page);
         return "boardPages/boardDetail";
     }
 
