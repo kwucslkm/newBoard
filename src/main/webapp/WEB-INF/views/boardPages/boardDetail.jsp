@@ -58,7 +58,27 @@
         <button onclick="comment_write()">댓글작성</button>
     </div>
     <div id="comment-list-area">
-
+        <c:choose>
+            <c:when test="${commentList == null}">
+                <h3>작성된 댓글이 없습니다.</h3>
+            </c:when>
+            <c:otherwise>
+                <table id="comment-list">
+                    <tr>
+                        <th>작성자</th>
+                        <th>내용</th>
+                        <th>작성시간</th>
+                    </tr>
+                    <c:forEach items="${commentList}" var="comment">
+                        <tr>
+                            <td>${comment.commentWriter}</td>
+                            <td>${comment.commentContents}</td>
+                            <td>${comment.createdAt}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 </body>
@@ -78,13 +98,13 @@
             },
             success: function (res) {
                 console.log("리턴값: ", res);
-                let output =    "<table id=\"comment-list\">\n" +
-                                "    <tr>\n" +
-                                "        <th>작성자</th>\n" +
-                                "        <th>내용</th>\n" +
-                                "        <th>작성시간</th>\n" +
-                                "    </tr>\n";
-                for(let i in res) {
+                let output = "<table id=\"comment-list\">\n" +
+                    "    <tr>\n" +
+                    "        <th>작성자</th>\n" +
+                    "        <th>내용</th>\n" +
+                    "        <th>작성시간</th>\n" +
+                    "    </tr>\n";
+                for (let i in res) {
                     output += "    <tr>\n";
                     output += "        <td>" + res[i].commentWriter + "</td>\n";
                     output += "        <td>" + res[i].commentContents + "</td>\n";
